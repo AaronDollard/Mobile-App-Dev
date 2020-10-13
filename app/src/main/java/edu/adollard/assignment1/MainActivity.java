@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText weight, height;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

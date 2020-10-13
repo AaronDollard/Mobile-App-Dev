@@ -3,4 +3,8 @@
     <color name="colorPrimary">#523C71</color>
     <color name="colorPrimaryDark">#FF5722</color>
     <color name="colorAccent">#523C71</color>
+
+    <color name="red">#A52A2A</color>
+    <color name="green">#209E16</color>
+    <color name="orange">#CA6E28</color>
 </resources>

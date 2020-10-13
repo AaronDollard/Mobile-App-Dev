@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class bmiResult extends AppCompatActivity {
     double cm, kg, bmi;
     TextView bmiResult, note;
+    View view; //For changing colour of background
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,17 @@ public class bmiResult extends AppCompatActivity {
         if(bmi <= 18.5) {
             note.setText("You are underweight");
             note.setTextColor(Color.rgb(255,128,0));
+            view = this.getWindow().getDecorView();
+            view.setBackgroundResource(R.color.red);
         }else if (bmi >= 18.6 && bmi <= 24.9) {
             note.setText("Your bmi is normal");
+            view = this.getWindow().getDecorView();
+            view.setBackgroundResource(R.color.green); //For Changing background colour
         }else if (bmi >= 25) {
             note.setText("You are overweight");
             note.setTextColor(Color.rgb(255,128,0));
+            view = this.getWindow().getDecorView();
+            view.setBackgroundResource(R.color.red);
         }
         else if (bmi >= 29.9) {
         note.setText("You are obese. Please seek a medical professional");
