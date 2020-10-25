@@ -2,6 +2,7 @@
 Work on mobile applications can be found here. 
 
 #################################################################################
+
 Master: Simple displaying of a toast upon entering custom string.
 
 Assignment 1: BMI Calculator app.
