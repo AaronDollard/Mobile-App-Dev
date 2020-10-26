@@ -13,7 +13,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     int bandsValue, band1, band2, bandsTogether;
-    double band3multi, bandsMulti, resistanceValue;
+    double bandsMulti;
+    long band3multi, resistanceValue;
     TextView Resistance, band1D, band2D, band3D, btn1, btn2, btn3; //Displays the result
 
     @Override
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             btn2.setBackgroundColor(Color.rgb(255,235,59));
         }
         else if (band2 == 5){
-            btn2.setBackgroundColor(Color.rgb(100,76,80));
+            btn2.setBackgroundColor(Color.rgb(76,175,80));
         }
         else if (band2 == 6){
             btn2.setBackgroundColor(Color.rgb(3,169,244));
@@ -145,7 +146,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         popup_band3.setOnMenuItemClickListener(this);
         popup_band3.inflate(R.menu.popup_menu); //Calls the popup menu from the popup xml for band 3
         popup_band3.show();
-        band3multi = bandsMulti;
+
+        band3multi = (new Double(bandsMulti)).longValue();
 
         if (band3multi == 1){
             btn3.setBackgroundColor(Color.rgb(37,37,37));
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             btn3.setBackgroundColor(Color.rgb(255,235,59));
         }
         else if (band3multi == 100000){
-            btn3.setBackgroundColor(Color.rgb(100,76,80));
+            btn3.setBackgroundColor(Color.rgb(76,175,80));
         }
         else if (band3multi == 1000000){
             btn3.setBackgroundColor(Color.rgb(3,169,244));
@@ -204,6 +206,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         band1D.setText("");
         band2D.setText("");
         band3D.setText("");
+
+        btn1.setBackgroundColor(Color.rgb(214,215,215));
+        btn2.setBackgroundColor(Color.rgb(214,215,215));
+        btn3.setBackgroundColor(Color.rgb(214,215,215));
     }
 
     @Override
