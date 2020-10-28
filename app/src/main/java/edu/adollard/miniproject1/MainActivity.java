@@ -13,9 +13,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     int bandsValue, band1, band2, bandsTogether;
-    double bandsMulti;
+    double bandsMulti, tolerance;
     long band3multi, resistanceValue;
-    TextView Resistance, band1D, band2D, band3D, btn1, btn2, btn3; //Displays the result
+    TextView Resistance, band1D, band2D, band3D, band4D, btn1, btn2, btn3, btn4; //Displays the result
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         btn1 = findViewById(R.id.btn_band1);
         btn2 = findViewById(R.id.btn_band2);
         btn3 = findViewById(R.id.btn_band3);
+        btn4 = findViewById(R.id.btn_band4);
     }
 
     //Do the calculation for the resistor using the inputted colours
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void doClick_Band3(View view) { //Band 3
         PopupMenu popup_band3 = new PopupMenu(this, view);
         popup_band3.setOnMenuItemClickListener(this);
-        popup_band3.inflate(R.menu.popup_menu); //Calls the popup menu from the popup xml for band 3
+        popup_band3.inflate(R.menu.popup_menu_band3); //Calls the popup menu from the popup xml for band 3
         popup_band3.show();
 
         band3multi = (new Double(bandsMulti)).longValue();
@@ -192,6 +193,50 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     }
 
+    public void doClick_Band4(View view) {
+        PopupMenu popup_band4 = new PopupMenu(this, view);
+        popup_band4.setOnMenuItemClickListener(this);
+        popup_band4.inflate(R.menu.popup_menu_band4); //Calls the popup menu from the popup xml for band 3
+        popup_band4.show();
+
+        tolerance = (new Double(tolerance)).longValue();
+
+        if (tolerance == 0){
+            btn4.setBackgroundColor(Color.rgb(37,37,37));
+        }
+        else if (tolerance == 1){
+            btn4.setBackgroundColor(Color.rgb(101,79,47));
+        }
+        else if (tolerance == 2){
+            btn4.setBackgroundColor(Color.rgb(156,26,26));
+        }
+        else if (tolerance == .5){
+            btn4.setBackgroundColor(Color.rgb(76,175,80));
+        }
+        else if (tolerance == 0.25){
+            btn4.setBackgroundColor(Color.rgb(3,169,244));
+        }
+        else if (tolerance == 0.1){
+            btn4.setBackgroundColor(Color.rgb(130,97,159));
+        }
+        else if (tolerance == 0.05){
+            btn4.setBackgroundColor(Color.rgb(149,148,147));
+        }
+        else if (tolerance == 5){
+            btn4.setBackgroundColor(Color.rgb(255,221,0));
+        }
+        else if (tolerance == 10){
+            btn4.setBackgroundColor(Color.rgb(151,151,151));
+        }
+        else if (tolerance == 20){
+            btn4.setBackgroundColor(Color.rgb(255,255,255));
+        }
+
+        //tolerance = 0;
+        band4D = findViewById(R.id.txt_band4);
+        band4D.setText("" + tolerance);
+    }
+
     public void doReset(View view) { //Reset the entered resistor values
         Resistance = findViewById(R.id.txtView_resistValue);
         bandsValue = 0;
@@ -226,12 +271,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Toast.makeText(this, "Brown selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 1;
                 bandsMulti = 10;
+                tolerance = 1;
                 return true;
 
             case R.id.item3:
                 Toast.makeText(this, "Red selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 2;
                 bandsMulti = 100;
+                tolerance = 2;
                 return true;
 
             case R.id.item4:
@@ -250,24 +297,28 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 5;
                 bandsMulti = 100000;
+                tolerance = 0.5;
                 return true;
 
             case R.id.item7:
                 Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 6;
                 bandsMulti = 1000000;
+                tolerance = 0.25;
                 return true;
 
             case R.id.item8:
                 Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 7;
                 bandsMulti = 10000000;
+                tolerance = 0.1;
                 return true;
 
             case R.id.item9:
                 Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 8;
                 bandsMulti = 100000000;
+                tolerance = 0.05;
                 return true;
 
             case R.id.item10:
@@ -279,17 +330,26 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case R.id.item11:
                 Toast.makeText(this, "Gold selected", Toast.LENGTH_SHORT).show();
                 bandsMulti = 0.1;
+                tolerance = 5;
                 return true;
 
             case R.id.item12:
                 Toast.makeText(this, "Silver selected", Toast.LENGTH_SHORT).show();
                 bandsMulti = 0.01;
+                tolerance = 10;
+                return true;
+
+            case R.id.item13:
+                Toast.makeText(this, "No tolerance selected", Toast.LENGTH_SHORT).show();
+                tolerance = 20;
                 return true;
 
             default:
                 return false;
         }
     }
+
+
 }
 
 

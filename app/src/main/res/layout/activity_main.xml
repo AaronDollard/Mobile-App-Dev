@@ -7,6 +7,17 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/txt_band3"
+        android:layout_width="61dp"
+        android:layout_height="52dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btn_band3"
+        app:layout_constraintEnd_toStartOf="@+id/txt_band4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_band2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/txt_band2"
         android:layout_width="61dp"
         android:layout_height="52dp"
@@ -15,8 +26,7 @@
         app:layout_constraintEnd_toStartOf="@+id/txt_band3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/txt_band1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_band1"
@@ -27,20 +37,18 @@
         app:layout_constraintEnd_toStartOf="@+id/txt_band2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_band3"
+        android:id="@+id/txt_band4"
         android:layout_width="61dp"
         android:layout_height="52dp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/btn_band3"
+        app:layout_constraintBottom_toTopOf="@+id/btn_band4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txt_band2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintStart_toEndOf="@+id/txt_band3"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_calc2"
@@ -50,9 +58,9 @@
         android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_calc"
-        app:layout_constraintVertical_bias="0.794" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_calc" />
 
     <TextView
         android:id="@+id/txtView_resistValue"
@@ -65,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_band1" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_band3" />
 
     <Button
         android:id="@+id/btn_calc"
@@ -73,11 +81,24 @@
         android:layout_height="wrap_content"
         android:onClick="doCalc"
         android:text="Calculate"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_calc2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_resistValue" />
+
+    <Button
+        android:id="@+id/btn_band3"
+        android:layout_width="36dp"
+        android:layout_height="130dp"
+        android:onClick="doClick_Band3"
+        android:text="Band 3"
+        app:layout_constraintBottom_toTopOf="@+id/txtView_resistValue"
+        app:layout_constraintEnd_toStartOf="@+id/btn_band4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_band2"
+        app:layout_constraintTop_toBottomOf="@+id/txt_band3"
+        app:layout_constraintVertical_bias="0.117" />
 
     <Button
         android:id="@+id/btn_band2"
@@ -89,7 +110,8 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_band3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_band1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_band2"
+        app:layout_constraintVertical_bias="0.117" />
 
     <Button
         android:id="@+id/btn_band1"
@@ -101,18 +123,20 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_band2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_band1"
+        app:layout_constraintVertical_bias="0.117" />
 
     <Button
-        android:id="@+id/btn_band3"
+        android:id="@+id/btn_band4"
         android:layout_width="36dp"
         android:layout_height="130dp"
-        android:onClick="doClick_Band3"
-        android:text="Band 3"
+        android:onClick="doClick_Band4"
+        android:text="Band 4"
         app:layout_constraintBottom_toTopOf="@+id/txtView_resistValue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_band2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/btn_band3"
+        app:layout_constraintTop_toBottomOf="@+id/txt_band4"
+        app:layout_constraintVertical_bias="0.117" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

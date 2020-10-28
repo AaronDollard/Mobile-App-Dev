@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    //This xml is used to populate the list of colours for band 1 and 2
-    <item
-        android:id="@+id/item1"
-        android:title="Black" />
-
+    //This xml is used to populate the list of colours for band 4
     <item android:id="@+id/item2"
         android:title="Brown"/>
 
     <item android:id="@+id/item3"
         android:title="Red"/>
-
-    <item android:id="@+id/item4"
-        android:title="Orange" />
-
-    <item android:id="@+id/item5"
-        android:title="Yellow"/>
 
     <item android:id="@+id/item6"
         android:title="Green"/>
@@ -30,7 +20,12 @@
     <item android:id="@+id/item9"
         android:title="Gray"/>
 
-    <item android:id="@+id/item10"
-        android:title="White"/>
+    <item android:id="@+id/item11"
+        android:title="Gold"/>
 
+    <item android:id="@+id/item12"
+        android:title="Silver"/>
+
+    <item android:id="@+id/item13"
+        android:title="None"/>
 </menu>
