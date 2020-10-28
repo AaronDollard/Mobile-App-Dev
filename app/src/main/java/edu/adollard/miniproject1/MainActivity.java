@@ -13,15 +13,16 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     int bandsValue, band1, band2, bandsTogether;
-    double bandsMulti, tolerance;
+    double bandsMulti, tolerance, MinTol, MaxTol;
     long band3multi, resistanceValue;
-    TextView Resistance, band1D, band2D, band3D, band4D, btn1, btn2, btn3, btn4; //Displays the result
+    TextView Resistance, Tolerance, MinMaxTolerance, band1D, band2D, band3D, band4D, btn1, btn2, btn3, btn4; //Displays the result
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         band1D = findViewById(R.id.txt_band1);
+
         btn1 = findViewById(R.id.btn_band1);
         btn2 = findViewById(R.id.btn_band2);
         btn3 = findViewById(R.id.btn_band3);
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     //Do the calculation for the resistor using the inputted colours
     public void doCalc(View view) { //Button to calculate the resistor
         Resistance = findViewById(R.id.txtView_resistValue);
+        Tolerance = findViewById(R.id.txtView_toleranceValue);
+        MinMaxTolerance = findViewById(R.id.txtView_toleranceValue2);
 
             String i1 = Integer.toString(band1);
             String i2 = Integer.toString(band2);
@@ -42,6 +45,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         resistanceValue = bandsTogether * band3multi;
         Resistance.setText("Resistance: " + resistanceValue +" Ohms");
 
+        tolerance = (resistanceValue*tolerance) /100;
+        Tolerance.setText("Tolerance: " + tolerance);
+
+        MinTol = resistanceValue - tolerance;
+        MaxTol = resistanceValue + tolerance;
+        MinMaxTolerance.setText("Minimum tolerance: " + MinTol + "\nMaximum tolerance: " + MaxTol);
     }
 
     public void doClick_Band1(View view) { //Band 1
@@ -246,15 +255,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         band3multi = 0;
         bandsTogether = 0;
         resistanceValue = 0;
+        tolerance = 0;
 
         Resistance.setText("Ω");
+        Tolerance.setText("Tolerance");
+        MinMaxTolerance.setText("");
         band1D.setText("");
         band2D.setText("");
         band3D.setText("");
+        band4D.setText("");
 
         btn1.setBackgroundColor(Color.rgb(214,215,215));
         btn2.setBackgroundColor(Color.rgb(214,215,215));
         btn3.setBackgroundColor(Color.rgb(214,215,215));
+        btn4.setBackgroundColor(Color.rgb(214,215,215));
     }
 
     @Override
@@ -297,28 +311,28 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 5;
                 bandsMulti = 100000;
-                tolerance = 0.5;
+                tolerance = .5;
                 return true;
 
             case R.id.item7:
                 Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 6;
                 bandsMulti = 1000000;
-                tolerance = 0.25;
+                tolerance = .25;
                 return true;
 
             case R.id.item8:
                 Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 7;
                 bandsMulti = 10000000;
-                tolerance = 0.1;
+                tolerance = .1;
                 return true;
 
             case R.id.item9:
                 Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                 bandsValue = 8;
                 bandsMulti = 100000000;
-                tolerance = 0.05;
+                tolerance = .05;
                 return true;
 
             case R.id.item10:
