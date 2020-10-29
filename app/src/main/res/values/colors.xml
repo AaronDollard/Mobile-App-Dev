@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#FFC107</color>
     <color name="colorAccent">#FF9800</color>
 
+
+    <color name="Background">#EACD68</color>
+
     <color name="Black">#252525</color>
     <color name="Brown">#654F2F</color>
     <color name="Red">#9C1A1A</color>
@@ -16,5 +19,4 @@
     <color name="White">#FFFFFF</color>
     <color name="Gold">#FFDD00</color>
     <color name="Silver">#979797</color>
-
 </resources>
