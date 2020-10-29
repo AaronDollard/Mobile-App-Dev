@@ -16,19 +16,18 @@ import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    int band1 = 0, band2 = 0, bandsTogether = 0, listPosition= 0;
+    int band1 = 0, band2 = 0, bandsTogether = 0, listPosition= 0, counter = 0;
     double bandsMulti = 0, band3multiDec = 0, tolerance = 0;
     long band3multi = 0, resistanceValue = 0, MinTol = 0, MaxTol = 0;
 
-    TextView Resistance, Tolerance, MinMaxTolerance,
+    TextView Resistance, Tolerance, Tolerance2, MinMaxTolerance,
             band1D, band2D, band3D, band4D,
-            btn1, btn2, btn3, btn4;
+            btn1, btn2, btn3, btn4, btn_calc, btn_reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //Text views for the band numbers
         band1D = findViewById(R.id.txt_band1);
         band2D = findViewById(R.id.txt_band2);
@@ -40,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         btn2 = findViewById(R.id.btn_band2);
         btn3 = findViewById(R.id.btn_band3);
         btn4 = findViewById(R.id.btn_band4);
+        btn_calc = findViewById(R.id.btn_calc);
+        btn_reset = findViewById(R.id.btn_calc2);
+        Tolerance = findViewById(R.id.txtView_toleranceValue);
+        Tolerance2 = findViewById(R.id.txtView_toleranceValue2);
 
         tolerance = (new Double(tolerance)).longValue();
         band3multi = (new Double(band3multiDec)).longValue();
@@ -47,37 +50,28 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     //Do the calculation for the resistor using the inputted colours
     public void doCalc(View view) { //Button to calculate the resistor
-        Resistance = findViewById(R.id.txtView_resistValue);
-        Tolerance = findViewById(R.id.txtView_toleranceValue);
-        MinMaxTolerance = findViewById(R.id.txtView_toleranceValue2);
+            btn_calc.setVisibility(View.GONE);
+            btn_reset.setVisibility(View.VISIBLE);
+            Resistance = findViewById(R.id.txtView_resistValue);
+            Tolerance = findViewById(R.id.txtView_toleranceValue);
+            MinMaxTolerance = findViewById(R.id.txtView_toleranceValue2);
 
             String i1 = Integer.toString(band1);
             String i2 = Integer.toString(band2);
             String i = i1 + i2; // Concatenate both strings
 
             bandsTogether = Integer.parseInt(i); // Convert the concatenated string to an int
-        resistanceValue = bandsTogether * band3multi;
+            resistanceValue = bandsTogether * band3multi;
 
-        Resistance.setText("Resistance: " + resistanceValue +" Ohms");
+            Resistance.setText("Resistance: " + resistanceValue +" Ohms");
 
-        Tolerance.setText("Tolerance: ±" + tolerance + "%");
-        tolerance = (resistanceValue * tolerance) /100;
+            Tolerance.setText("Tolerance: ±" + tolerance + "%");
+            tolerance = (resistanceValue * tolerance) /100;
 
-        MinTol = (long) (resistanceValue - tolerance);
-        MaxTol = (long) (resistanceValue + tolerance);
-        MinMaxTolerance.setText("Minimum resistance: " + MinTol + "Ω\nMaximum resistance: " + MaxTol +"Ω");
-    }
-
-    public void afterTextChanged(Editable s) {
-        double doubleValue = 0;
-        if (s != null) {
-            try {
-                doubleValue = Double.parseDouble(s.toString().replace(',', '.'));
-            } catch (NumberFormatException e) {
-                //Error
-            }
-        }
-        //Do something with doubleValue
+            MinTol = (long) (resistanceValue - tolerance);
+            MaxTol = (long) (resistanceValue + tolerance);
+            MinMaxTolerance.setText("Minimum resistance: " + MinTol + "Ω\nMaximum resistance: " + MaxTol +"Ω");
+        //}
     }
 
     public void doClick_Band1(View view) { //Band 1
@@ -113,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     public void doReset(View view) { //Reset the entered resistor values
+        counter-=1;
         Resistance = findViewById(R.id.txtView_resistValue);
         bandsMulti = 0;
         band1 = 0;
@@ -122,26 +117,28 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         resistanceValue = 0;
         tolerance = 0;
         Resistance.setText("Ω");
-        Tolerance.setText("Tolerance");
+        btn_calc.setVisibility(View.VISIBLE);
+        Tolerance.setText("");
         MinMaxTolerance.setText("");
         band1D.setText("");
         band2D.setText("");
         band3D.setText("");
         band4D.setText("");
-
         btn1.setBackgroundColor(Color.rgb(214,215,215));
         btn2.setBackgroundColor(Color.rgb(214,215,215));
         btn3.setBackgroundColor(Color.rgb(214,215,215));
         btn4.setBackgroundColor(Color.rgb(214,215,215));
+        btn_reset.setBackgroundColor(Color.rgb(214,215,215));
+        Resistance.setBackgroundColor(Color.rgb(234,205,104));
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         //This is what happens when you click something in the popup for the bands
-        switch (listPosition) {
-            case 1:
-                switch (item.getItemId()) {
-                    case R.id.item1:
+        switch (listPosition) { //Watches for which band button was pressed
+            case 1: //Case 1 being button 1
+                switch (item.getItemId()) { //Checks which item in the dropdown was clicked
+                    case R.id.item1: //In this case item 1
                         Toast.makeText(this, "Black selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(37,37,37));
                         band1 = 0;
@@ -152,63 +149,63 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Toast.makeText(this, "Brown selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(101,79,47));
                         band1 = 1;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item3:
                         Toast.makeText(this, "Red selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(156,26,26));
                         band1 = 2;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item4:
                         Toast.makeText(this, "Orange selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(255,152,0));
                         band1 = 3;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item5:
                         Toast.makeText(this, "Yellow selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(255,235,59));
                         band1 = 4;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item6:
                         Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(76,175,80));
                         band1 = 5;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item7:
                         Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(3,169,244));
                         band1 = 6;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item8:
                         Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(130,97,159));
                         band1 = 7;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item9:
                         Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(149,148,147));
                         band1 = 8;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     case R.id.item10:
                         Toast.makeText(this, "White selected", Toast.LENGTH_SHORT).show();
                         btn1.setBackgroundColor(Color.rgb(255,255,255));
                         band1 = 9;
-                        band1D.setText("" + band1); //Displays values of selected colour in box above the button
+                        band1D.setText("" + band1);
                         return true;
 
                     default:
@@ -221,70 +218,70 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Toast.makeText(this, "Black selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(37,37,37));
                         band2 = 0;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item2:
                         Toast.makeText(this, "Brown selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(101,79,47));
                         band2 = 1;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item3:
                         Toast.makeText(this, "Red selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(156,26,26));
                         band2 = 2;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item4:
                         Toast.makeText(this, "Orange selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(255,152,0));
                         band2 = 3;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item5:
                         Toast.makeText(this, "Yellow selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(255,235,59));
                         band2 = 4;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item6:
                         Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(76,175,80));
                         band2 = 5;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item7:
                         Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(3,169,244));
                         band2 = 6;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item8:
                         Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(130,97,159));
                         band2 = 7;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item9:
                         Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(149,148,147));
                         band2 = 8;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     case R.id.item10:
                         Toast.makeText(this, "White selected", Toast.LENGTH_SHORT).show();
                         btn2.setBackgroundColor(Color.rgb(255,255,255));
                         band2 = 9;
-                        band2D.setText("" + band2); //Displays values of selected colour in box above the button
+                        band2D.setText("" + band2);
                         return true;
 
                     default:
@@ -297,84 +294,84 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Toast.makeText(this, "Black selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(37,37,37));
                         band3multi = 1;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item2:
                         Toast.makeText(this, "Brown selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(101,79,47));
                         band3multi = 10;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item3:
                         Toast.makeText(this, "Red selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(156,26,26));
                         band3multi = 100;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item4:
                         Toast.makeText(this, "Orange selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,152,0));
                         band3multi = 1000;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item5:
                         Toast.makeText(this, "Yellow selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,235,59));
                         band3multi = 10000;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item6:
                         Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(76,175,80));
                         band3multi = 100000;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item7:
                         Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(3,169,244));
                         band3multi = 1000000;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item8:
                         Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(130,97,159));
                         band3multi = 10000000;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item9:
                         Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(149,148,147));
                         band3multi = 100000000;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item10:
                         Toast.makeText(this, "White selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,255,255));
                         band3multi = 1000000000;
-                        band3D.setText("" + band3multi); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multi);
                         return true;
 
                     case R.id.item11:
                         Toast.makeText(this, "Gold selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,221,0));
                         band3multiDec = 0.1;
-                        band3D.setText("" + band3multiDec); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multiDec);
                         return true;
 
                     case R.id.item12:
                         Toast.makeText(this, "Silver selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(151,151,151));
                         band3multiDec = 0.01;
-                        band3D.setText("" + band3multiDec); //Displays values of selected colour in box above the button
+                        band3D.setText("" + band3multiDec);
                         return true;
 
                     default:
@@ -387,56 +384,56 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Toast.makeText(this, "Brown selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(101,79,47));
                         tolerance = 1;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item3:
                         Toast.makeText(this, "Red selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(156,26,26));
                         tolerance = 2;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item6:
                         Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(76,175,80));
                         tolerance = 0.5;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item7:
                         Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(3,169,244));
                         tolerance = 0.25;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item8:
                         Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(130,97,159));
                         tolerance = 0.1;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item9:
                         Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(149,148,147));
                         tolerance = 0.05;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item11:
                         Toast.makeText(this, "Gold selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(255,221,0));
                         tolerance = 5;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item12:
                         Toast.makeText(this, "Silver selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(151,151,151));
                         tolerance = 10;
-                        band4D.setText("" + tolerance); //Displays values of selected colour in box above the button
+                        band4D.setText("" + tolerance);
                         return true;
 
                     case R.id.item13:
