@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     //Do the calculation for the resistor using the inputted colours
     public void doCalc(View view) { //Button to calculate the resistor
+
+        if (band1 >= 0 && band2 >= 0 && band3multi >=1  || band3multiDec >= 0.01 && tolerance >= 0.01){
             btn_calc.setVisibility(View.GONE);
             btn_reset.setVisibility(View.VISIBLE);
             Resistance = findViewById(R.id.txtView_resistValue);
@@ -71,7 +73,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             MinTol = (long) (resistanceValue - tolerance);
             MaxTol = (long) (resistanceValue + tolerance);
             MinMaxTolerance.setText("Minimum resistance: " + MinTol + "Ω\nMaximum resistance: " + MaxTol +"Ω");
-        //}
+        }
+
+        else {
+            Toast.makeText(this, "Error! Need valid values for each band!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void doClick_Band1(View view) { //Band 1
