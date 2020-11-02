@@ -17,8 +17,8 @@ import java.util.TreeMap;
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     int band1 = 0, band2 = 0, bandsTogether = 0, listPosition= 0, counter = 0;
-    double bandsMulti = 0, band3multiDec = 0, tolerance = 0;
-    long band3multi = 0, resistanceValue = 0, MinTol = 0, MaxTol = 0;
+    double bandsMulti = 0, band3multiDec = 0, tolerance = 0, MaxTolDec = 0, MinTolDec = 0, resistanceValueDec = 0;
+    long band3multi = 0, resistanceValue = 0, MaxTol = 0, MinTol = 0;
 
     TextView Resistance, Tolerance, Tolerance2, MinMaxTolerance,
             band1D, band2D, band3D, band4D,
@@ -43,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         btn_reset = findViewById(R.id.btn_calc2);
         Tolerance = findViewById(R.id.txtView_toleranceValue);
         Tolerance2 = findViewById(R.id.txtView_toleranceValue2);
-
-        tolerance = (new Double(tolerance)).longValue();
-        band3multi = (new Double(band3multiDec)).longValue();
     }
 
     //Do the calculation for the resistor using the inputted colours
@@ -63,16 +60,30 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             String i = i1 + i2; // Concatenate both strings
 
             bandsTogether = Integer.parseInt(i); // Convert the concatenated string to an int
-            resistanceValue = bandsTogether * band3multi;
 
-            Resistance.setText("Resistance: " + resistanceValue +" Ohms");
+            if (band3multiDec != 0) //If the calc is decimal values
+            {
+                resistanceValueDec = bandsTogether * band3multiDec;
+                Tolerance.setText("Formula: " + resistanceValueDec + "=" + bandsTogether + "x" + band3multiDec + "±" + tolerance + "%");
+                Resistance.setText("Resistance: " + resistanceValueDec +" Ohms");
+                tolerance = (resistanceValueDec * tolerance) /100;
 
-            Tolerance.setText("Tolerance: ±" + tolerance + "%");
-            tolerance = (resistanceValue * tolerance) /100;
+                MinTolDec = (resistanceValueDec - tolerance);
+                MaxTolDec = (resistanceValueDec + tolerance);
+                MinMaxTolerance.setText("Minimum resistance: " + MinTolDec + "Ω\nMaximum resistance: " + MaxTolDec +"Ω");
+            }
 
-            MinTol = (long) (resistanceValue - tolerance);
-            MaxTol = (long) (resistanceValue + tolerance);
-            MinMaxTolerance.setText("Minimum resistance: " + MinTol + "Ω\nMaximum resistance: " + MaxTol +"Ω");
+            if (band3multi != 0) //If the calc is longs
+            {
+                resistanceValue = (bandsTogether * band3multi);
+                Tolerance.setText("Formula: " + resistanceValue + "=" + bandsTogether + " x " + band3multi + "±" + tolerance + "%");
+                Resistance.setText("Resistance: " + resistanceValue +" Ohms");
+                tolerance = (resistanceValue * tolerance) /100;
+
+                MinTol = (long) (resistanceValue - tolerance);
+                MaxTol = (long) (resistanceValue + tolerance);
+                MinMaxTolerance.setText("Minimum resistance: " + MinTol + "Ω\nMaximum resistance: " + MaxTol +"Ω");
+            }
         }
 
         else {
@@ -115,13 +126,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void doReset(View view) { //Reset the entered resistor values
         counter-=1;
         Resistance = findViewById(R.id.txtView_resistValue);
-        bandsMulti = 0;
         band1 = 0;
-        band2 = 0;
-        band3multi = 0;
+        band2 = 0 ;
         bandsTogether = 0;
-        resistanceValue = 0;
+        listPosition= 0;
+        counter = 0;
+        bandsMulti = 0 ;
+        band3multiDec = 0;
         tolerance = 0;
+        MaxTolDec = 0;
+        MinTolDec = 0 ;
+        resistanceValueDec = 0;
+        band3multi = 0;
+        resistanceValue = 0;
+        MaxTol = 0;
+        MinTol = 0;
         Resistance.setText("Ω");
         btn_calc.setVisibility(View.VISIBLE);
         Tolerance.setText("");
@@ -300,84 +319,84 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Toast.makeText(this, "Black selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(37,37,37));
                         band3multi = 1;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item2:
                         Toast.makeText(this, "Brown selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(101,79,47));
                         band3multi = 10;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item3:
                         Toast.makeText(this, "Red selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(156,26,26));
                         band3multi = 100;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item4:
                         Toast.makeText(this, "Orange selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,152,0));
                         band3multi = 1000;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item5:
                         Toast.makeText(this, "Yellow selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,235,59));
                         band3multi = 10000;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item6:
                         Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(76,175,80));
                         band3multi = 100000;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item7:
                         Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(3,169,244));
                         band3multi = 1000000;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item8:
                         Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(130,97,159));
                         band3multi = 10000000;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item9:
                         Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(149,148,147));
                         band3multi = 100000000;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item10:
                         Toast.makeText(this, "White selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,255,255));
                         band3multi = 1000000000;
-                        band3D.setText("" + band3multi);
+                        band3D.setText("x" + band3multi);
                         return true;
 
                     case R.id.item11:
                         Toast.makeText(this, "Gold selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(255,221,0));
                         band3multiDec = 0.1;
-                        band3D.setText("" + band3multiDec);
+                        band3D.setText("x" + band3multiDec);
                         return true;
 
                     case R.id.item12:
                         Toast.makeText(this, "Silver selected", Toast.LENGTH_SHORT).show();
                         btn3.setBackgroundColor(Color.rgb(151,151,151));
                         band3multiDec = 0.01;
-                        band3D.setText("" + band3multiDec);
+                        band3D.setText("x" + band3multiDec);
                         return true;
 
                     default:
@@ -390,62 +409,62 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Toast.makeText(this, "Brown selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(101,79,47));
                         tolerance = 1;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item3:
                         Toast.makeText(this, "Red selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(156,26,26));
                         tolerance = 2;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item6:
                         Toast.makeText(this, "Green selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(76,175,80));
                         tolerance = 0.5;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item7:
                         Toast.makeText(this, "Blue selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(3,169,244));
                         tolerance = 0.25;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item8:
                         Toast.makeText(this, "Violet selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(130,97,159));
                         tolerance = 0.1;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item9:
                         Toast.makeText(this, "Gray selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(149,148,147));
                         tolerance = 0.05;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item11:
                         Toast.makeText(this, "Gold selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(255,221,0));
                         tolerance = 5;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item12:
                         Toast.makeText(this, "Silver selected", Toast.LENGTH_SHORT).show();
                         btn4.setBackgroundColor(Color.rgb(151,151,151));
                         tolerance = 10;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     case R.id.item13:
                         Toast.makeText(this, "No tolerance selected", Toast.LENGTH_SHORT).show();
                         tolerance = 20;
-                        band4D.setText("" + tolerance);
+                        band4D.setText("±" + tolerance +"%");
                         return true;
 
                     default:

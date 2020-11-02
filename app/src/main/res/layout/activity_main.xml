@@ -68,7 +68,7 @@
         android:id="@+id/txtView_resistValue"
         android:layout_width="378dp"
         android:layout_height="48dp"
-        android:text="Ω "
+        android:text="Ω"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txtView_toleranceValue"
