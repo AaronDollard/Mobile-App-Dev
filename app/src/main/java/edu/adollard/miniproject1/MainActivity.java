@@ -64,30 +64,49 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             if (band3multiDec != 0) //If the calc is decimal values
             {
                 resistanceValueDec = bandsTogether * band3multiDec;
-                Tolerance.setText("Formula: " + resistanceValueDec + "=" + bandsTogether + "x" + band3multiDec + "±" + tolerance + "%");
-                Resistance.setText("Resistance: " + resistanceValueDec +" Ohms");
-                tolerance = (resistanceValueDec * tolerance) /100;
 
-                MinTolDec = (resistanceValueDec - tolerance);
-                MaxTolDec = (resistanceValueDec + tolerance);
-                MinMaxTolerance.setText("Minimum resistance: " + MinTolDec + "Ω\nMaximum resistance: " + MaxTolDec +"Ω");
+                if (tolerance != 0){
+                    Tolerance.setText("Formula: " + bandsTogether + "x" + band3multiDec + "±" + tolerance + "%"  + " = " + resistanceValueDec);
+                    Resistance.setText("Resistance: " + resistanceValueDec +" Ohms");
+                    tolerance = (resistanceValueDec * tolerance) /100;
+
+                    MinTolDec = (resistanceValueDec - tolerance);
+                    MaxTolDec = (resistanceValueDec + tolerance);
+                    MinMaxTolerance.setText("Minimum resistance: " + MinTolDec + "Ω\nMaximum resistance: " + MaxTolDec +"Ω");
+                }
+
+                if (tolerance == 0 ){
+                    Tolerance.setText("Formula: " + bandsTogether + "x" + band3multiDec  + " = " + resistanceValueDec);
+                    Resistance.setText("Resistance: " + resistanceValueDec +" Ohms");
+                }
+
             }
 
             if (band3multi != 0) //If the calc is longs
             {
-                resistanceValue = (bandsTogether * band3multi);
-                Tolerance.setText("Formula: " + resistanceValue + "=" + bandsTogether + " x " + band3multi + "±" + tolerance + "%");
-                Resistance.setText("Resistance: " + resistanceValue +" Ohms");
-                tolerance = (resistanceValue * tolerance) /100;
+                if (tolerance != 0)
+                {
+                    resistanceValue = (bandsTogether * band3multi);
+                    Tolerance.setText("Formula: " + bandsTogether + " x " + band3multi + "±" + tolerance + "%"  + " = " + resistanceValue);
+                    Resistance.setText("Resistance: " + resistanceValue +" Ohms");
+                    tolerance = (resistanceValue * tolerance) /100;
 
-                MinTol = (long) (resistanceValue - tolerance);
-                MaxTol = (long) (resistanceValue + tolerance);
-                MinMaxTolerance.setText("Minimum resistance: " + MinTol + "Ω\nMaximum resistance: " + MaxTol +"Ω");
+                    MinTol = (long) (resistanceValue - tolerance);
+                    MaxTol = (long) (resistanceValue + tolerance);
+                    MinMaxTolerance.setText("Minimum resistance: " + MinTol + "Ω\nMaximum resistance: " + MaxTol +"Ω");
+                }
+
+                if (tolerance == 0)
+                {
+                    resistanceValue = (bandsTogether * band3multi);
+                    Tolerance.setText("Formula: " + bandsTogether + " x " + band3multi + " = " + resistanceValue);
+                    Resistance.setText("Resistance: " + resistanceValue +" Ohms");
+                }
             }
         }
 
         else {
-            Toast.makeText(this, "Error! Need valid values for each band!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error! Not enough bands selected!", Toast.LENGTH_SHORT).show();
         }
     }
 
