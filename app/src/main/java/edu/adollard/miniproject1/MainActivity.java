@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 resistanceValueDec = bandsTogether * band3multiDec;
 
                 if (tolerance != 0){
-                    Tolerance.setText("Formula: " + bandsTogether + "x" + band3multiDec + "±" + tolerance + "%"  + " = " + resistanceValueDec);
+                    Tolerance.setText("Formula: " + bandsTogether + "x" + band3multiDec + "±" + tolerance + "%"  + " = " + resistanceValueDec+ " Ohms");
                     Resistance.setText("Resistance: " + resistanceValueDec +" Ohms");
                     tolerance = (resistanceValueDec * tolerance) /100;
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 }
 
                 if (tolerance == 0 ){
-                    Tolerance.setText("Formula: " + bandsTogether + "x" + band3multiDec  + " = " + resistanceValueDec);
+                    Tolerance.setText("Formula: " + bandsTogether + "x" + band3multiDec  + " = " + resistanceValueDec + " Ohms");
                     Resistance.setText("Resistance: " + resistanceValueDec +" Ohms");
                 }
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 if (tolerance != 0)
                 {
                     resistanceValue = (bandsTogether * band3multi);
-                    Tolerance.setText("Formula: " + bandsTogether + " x " + band3multi + "±" + tolerance + "%"  + " = " + resistanceValue);
+                    Tolerance.setText("Formula: " + bandsTogether + " x " + band3multi + "±" + tolerance + "%"  + " = " + resistanceValue + " Ohms");
                     Resistance.setText("Resistance: " + resistanceValue +" Ohms");
                     tolerance = (resistanceValue * tolerance) /100;
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 if (tolerance == 0)
                 {
                     resistanceValue = (bandsTogether * band3multi);
-                    Tolerance.setText("Formula: " + bandsTogether + " x " + band3multi + " = " + resistanceValue);
+                    Tolerance.setText("Formula: " + bandsTogether + " x " + band3multi + " = " + resistanceValue + " Ohms");
                     Resistance.setText("Resistance: " + resistanceValue +" Ohms");
                 }
             }
