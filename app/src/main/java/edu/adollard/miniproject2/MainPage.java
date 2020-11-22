@@ -48,7 +48,7 @@ public class MainPage extends AppCompatActivity {
         Hour = getIntent().getIntExtra("timeViewHour", Hour);
         Minute = getIntent().getIntExtra("timeViewMinute", Minute);
         Second = getIntent().getIntExtra("timeViewSecond", Second);
-        TimeTaken.setText(Hour + " Hour " + Minute + " Minute " + Second + " Second");
+        TimeTaken.setText(Hour + "H " + Minute + "M " + Second + "S");
     }
 
 

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 timerT++;
                 if (second == 60){
                     timeViewSecond.setText(String.valueOf(second));
-                    timeViewSecond.setText("0");
+                    timeViewSecond.setText("0s");
                     minute++;
                     timeViewMinute.setText(minute + "m");
                     timer.cancel(); //Resets the timer to 0
@@ -97,16 +97,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             if (timerT >=1)
             {
+                String strS = timeViewSecond.getText().toString();
+                String strNewS = strS.replace("s", ""); //gets rid of letter
+                timeViewSecond.setText(strNewS); //Sets the box to new number
                 int Second = Integer.valueOf(timeViewSecond.getText().toString());
                 Splash.putExtra("timeViewSecond", Second);
 
                 if (timerT >=61)
                 {
+                    String strM = timeViewMinute.getText().toString();
+                    String strNewM = strM.replace("m", ""); //gets rid of letter
+                    timeViewMinute.setText(strNewM); //Sets the box to new number
                     int Minute = Integer.valueOf(timeViewMinute.getText().toString());
                     Splash.putExtra("timeViewMinute", Minute);
 
                     if (timerT >= 3600)
                     {
+
+                        String strH = timeViewHour.getText().toString();
+                        String strNewH = strH.replace("h", ""); //gets rid of letter
+                        timeViewHour.setText(strNewH); //Sets the box to new number
                         int Hour = Integer.valueOf(timeViewHour.getText().toString());
                         Splash.putExtra("timeViewHour", Hour);
                     }
@@ -119,10 +129,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void doReset(View view) {
         timer.cancel();
         active = false;
-        timeViewSecond.setText("");
-        timeViewMinute.setText("");
-        timeViewHour.setText("");
-        stepsView.setText("");
+        timeViewSecond.setText("0s");
+        timeViewMinute.setText("0m");
+        timeViewHour.setText("0h");
+        stepsView.setText("0");
         Start_Button.setVisibility(View.VISIBLE);
         Stop_Button.setVisibility(View.INVISIBLE);
         //Toast.makeText(this, "Reset", Toast.LENGTH_LONG).show();
