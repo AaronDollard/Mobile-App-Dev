@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //Using the timer code
     CountUpTimer timer;
+    //Sound for starting and stopping
+    MediaPlayer sound;
     //Views for the information
     TextView stepsView, timeViewHour, timeViewMinute, timeViewSecond,
             Start_Button, Stop_Button, Reset_Button, Results_Button;
@@ -144,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Start_Button.setVisibility(View.INVISIBLE);
         Stop_Button.setVisibility(View.VISIBLE);
         //Toast.makeText(this, "Started counting", Toast.LENGTH_LONG).show();
+        StartSound();
     }
     //Stop the counter
     public void doStop(View view) {
@@ -151,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         active = false;
         Stop_Button.setVisibility(View.GONE);
         //Toast.makeText(this, "Stopped Run", Toast.LENGTH_LONG).show();
+        StoppedSound();
     }
 
     @Override
@@ -174,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             highLimit = false; //Set high point as false to detect next step
         }
     }
-
 
     /*When the app is brought to the foreground - using app on screen*/
     protected void onResume() {
@@ -201,5 +205,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         value = value * factor;
         long tmp = Math.round(value);
         return (double) tmp / factor;
+    }
+
+
+    private void StartSound() {
+        sound = MediaPlayer.create(this, R.raw.started);
+        sound.start();
+    }
+
+    private void StoppedSound() {
+        sound = MediaPlayer.create(this, R.raw.stopped);
+        sound.start();
     }
 }
