@@ -33,7 +33,7 @@ public class MainActivity extends ListActivity  {
     }
 
     // Will be called via the onClick attribute
-    // of the buttons in main.xml
+    // of the buttons in main.xml 
     public void onClick(View view) {
         @SuppressWarnings("unchecked")
         ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
