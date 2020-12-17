@@ -10,29 +10,25 @@
         android:id="@+id/btn_play_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="32dp"
         android:background="@drawable/style_rectangle_button_"
+        android:onClick="playAgain"
         android:text="Play Again"
         app:layout_constraintBottom_toTopOf="@+id/btn_hi_scores"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.923"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_hi_scores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="579dp"
-        android:layout_marginTop="147dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="72dp"
         android:background="@drawable/style_rectangle_button_"
+        android:onClick="GoToHiScores"
         android:text="See Hi Scores"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.923"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_play_again" />
 </androidx.constraintlayout.widget.ConstraintLayout>
