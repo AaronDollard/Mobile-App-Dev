@@ -135,7 +135,7 @@ public class game_screen extends AppCompatActivity implements SensorEventListene
         if(NumberSelected == gameSequence[selectedColour]){
             //Toast.makeText(this,"Correct",Toast.LENGTH_SHORT).show();
             playerScore = playerScore + 1;
-            ScoreBoard.setText("Score: " + IndexArray);
+            ScoreBoard.setText("Score: " + playerScore);
         }
         //Otherwise exit to game over
         else {

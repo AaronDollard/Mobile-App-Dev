@@ -16,6 +16,7 @@
         <shape android:shape="oval">
             <solid android:color="@color/Blue"/>
             <size android:width="120dp" android:height="120dp"/>
+            <stroke android:width="2dp" android:color="#000000"/>
         </shape>
     </item>
 </selector>
