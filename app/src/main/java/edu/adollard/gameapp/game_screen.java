@@ -126,7 +126,6 @@ public class game_screen extends AppCompatActivity implements SensorEventListene
             WestReached = false;
             btn1RED.setPressed(true);
             GameSequenceCorrect(btn1RED);
-
         }
     }
 
